@@ -1,0 +1,53 @@
+# Example pool data
+pool_data = {
+    "total_reward": 0.0030 - 0.0005,  # Total XMR reward available for payout
+    "workers": [
+        {"id": "worker1", "hashrate": 500, "shares": 200},  # Low hashrate
+        {"id": "worker2", "hashrate": 2000, "shares": 1000}, # Medium hashrate
+        {"id": "worker3", "hashrate": 7500, "shares": 6800}, # High hashrate
+        {"id": "worker4", "hashrate": 500, "shares": 200},  # Low hashrate
+        {"id": "worker5", "hashrate": 2000, "shares": 1000}, # Medium hashrate
+        {"id": "worker6", "hashrate": 7500, "shares": 6800}, # High hashrate
+        {"id": "worker7", "hashrate": 500, "shares": 200},  # Low hashrate
+        {"id": "worker8", "hashrate": 2000, "shares": 1000}, # Medium hashrate
+        {"id": "worker9", "hashrate": 7500, "shares": 6800}, # High hashrate
+        {"id": "worker10", "hashrate": 500, "shares": 200},  # Low hashrate
+        {"id": "worker11", "hashrate": 2000, "shares": 1000}, # Medium hashrate
+        {"id": "worker12", "hashrate": 7500, "shares": 6800}, # High hashrate
+        {"id": "worker12", "hashrate": 75000, "shares": 68000}
+    ]
+}
+
+# Total reward available for payout
+total_reward = pool_data["total_reward"]
+
+# Calculate total shares
+total_shares = sum(worker["shares"] for worker in pool_data["workers"])
+
+# Distribute the reward proportionally
+for worker in pool_data["workers"]:
+    # Base payout (proportional to shares)
+    worker["payout"] = (worker["shares"] / total_shares) * total_reward
+
+# Adjust to the exact available reward
+total_payout = sum(worker["payout"] for worker in pool_data["workers"])
+if total_payout > total_reward:
+    # Scale down payouts to match total available reward
+    scale_factor = total_reward / total_payout
+    for worker in pool_data["workers"]:
+        worker["payout"] *= scale_factor
+
+# Convert XMR payouts to Robux (example conversion rate)
+xmr_to_robux = 39730  # Example: 1 XMR = 10,000 Robux
+for worker in pool_data["workers"]:
+    worker["robux"] = worker["payout"] * xmr_to_robux
+
+# Display results
+for worker in pool_data["workers"]:
+    print(f"Worker {worker['id']} earns {worker['payout']:.6f} XMR ({worker['robux']:.2f} Robux)")
+addd = 0
+for worker in pool_data["workers"]:
+    addd += float(worker['payout'])
+print(addd)
+    
+
